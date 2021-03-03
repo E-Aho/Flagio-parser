@@ -1,4 +1,5 @@
 from colorsys import rgb_to_hsv, hsv_to_rgb
+from typing import Union
 
 
 class RGB:
@@ -29,7 +30,7 @@ class HSV:
     def __init__(self, values: tuple):
         if len(values) != 3:
             raise Exception(f"HSV Error: RGB value {values} does not have 3 values")
-        _hsv = tuple(map(int, values))
+        _hsv = tuple(map(float, values))
         if _hsv[0] < 0 or _hsv[0] > 360:
             raise Exception(f"HSV Error: H value from HSV {values} is not between 0 and 360")
         elif _hsv[1] < 0 or _hsv[1] > 1:
@@ -73,8 +74,8 @@ class SubColor(Color):
 red = Color("red", RGB((255, 0, 0)))
 orange = Color("orange", RGB((255, 128, 0)))
 yellow = Color("yellow", RGB((255, 255, 0)))
-green = Color("green", RGB((0, 255, 0)))
-blue = Color("blue", RGB((0, 0, 255)))
+green = Color("green", RGB((20, 255, 20)))
+blue = Color("blue", RGB((10, 10, 255)))
 purple = Color("purple", RGB((127, 0, 255)))
 pink = Color("pink", RGB((255, 51, 255)))
 brown = Color("brown", RGB((102, 51, 0)))
@@ -82,8 +83,53 @@ black = Color("black", RGB((0, 0, 0)))
 white = Color("white", RGB((255, 255, 255)))
 grey = Color("grey", RGB((128, 128, 128)))
 
-lime_green = SubColor("lime_green", RGB((128, 255, 0)), green)
-sea_foam = SubColor("sea_foam", RGB((0, 255, 128)), green)
-teal = SubColor("teal", RGB((0, 255, 255)), blue)
+gold = SubColor("gold", RGB((197, 179, 88)), yellow)
 
+
+def categorise_color(value: Union[RGB, HSV]) -> Color:
+    # Hard coded because for our use case, we have quite specific colors to pick out, and only care about broad cases
+    # There is definitely a better way to do this but *shrug*
+
+    c = None
+    if isinstance(value, RGB):
+        c = value.to_hsv()
+    elif isinstance(value, HSV):
+        c = value
+    else:
+        raise Exception("CategoriseColor Error: The given color is not in a valid format.")
+
+    print(f"h: {c.h}, s: {c.s}, v: {c.v}")
+
+    if c.v < 0.1 or (c.s < 0.2 and c.v < 0.15):
+        return black
+    elif c.s < 0.04 and c.v < 0.95 or (180 < c.h < 230 and c.s < 0.2 and c.v < 0.7):
+        return grey
+    elif c.s < 0.035 and c.v >= 0.95:
+        return white
+
+    else:  # not greyscale
+        if 0 <= c.h < 15 or c.h >= 340:  # reds
+            if c.s < 0.60 and (340 < c.h or 9 < c.h):
+                return pink
+            elif c.s < 0.75 and c.h > 10:
+                return orange
+            else:
+                return red
+        elif c.h < 43:  # oranges
+            if c.v < 0.6 or (c.s < .6 and c.v < 0.9):
+                return brown
+            else:
+                return orange
+        elif c.h < 66:  # yellows
+            return yellow
+        elif c.h < 160:  # greens
+            return green
+        elif c.h < 259:  # blues
+            return blue
+        elif c.h < 309:  # purples
+            return purple
+        elif c.h < 340:  # pinks
+            return pink
+        else:
+            raise Exception("CategoriseColor Error: Fallthrough.")
 
