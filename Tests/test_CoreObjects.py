@@ -106,6 +106,9 @@ class TestCategoriseColor:
         def test_hot_pink(self):
             assert categorise_color(RGB((255, 105, 180))) == pink
 
+        def test_pride_pink(self):
+            assert categorise_color(RGB((245, 169, 184))) == pink
+
     class TestWhite:
         def test_pure_white(self):
             assert categorise_color(RGB((255, 255, 255))) == white
