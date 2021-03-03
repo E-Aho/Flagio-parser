@@ -2,6 +2,7 @@ import pytest
 
 from CoreObjects import *
 
+
 class TestCategoriseColor:
 
     class TestReds:
@@ -119,7 +120,7 @@ class TestCategoriseColor:
 
     class TestGrey:
         def test_normal_grey(self):
-            assert categorise_color(RGB((155, 155, 15))) == grey
+            assert categorise_color(RGB((155, 155, 155))) == grey
 
         def test_light_grey(self):
             assert categorise_color(RGB((233, 239, 241))) == grey
@@ -134,7 +135,7 @@ class TestCategoriseColor:
         def test_off_greys(self):
             assert categorise_color(RGB((200, 205, 198))) == grey
             assert categorise_color(RGB((205, 199, 204))) == grey
-            assert categorise_color(RGB((115, 113, 110))) == grey
+            assert categorise_color(RGB((114, 113, 110))) == grey
 
     class TestBlack:
         def test_normal_black(self):
