@@ -27,6 +27,7 @@ class TestCategoriseColor:
         def test_red_orange(self):
             assert categorise_color(RGB((255, 107, 43))) == orange
 
+    class TestBrown:
         def test_light_brown(self):
             assert categorise_color(RGB((210, 180, 140))) == brown
 
