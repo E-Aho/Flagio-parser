@@ -1,12 +1,12 @@
 import cv2
 
-__belgium_file = "Flag_of_Belgium.svg"
-__france_file = "Flag_of_France.svg"
-__germany_file = "Flag_of_Germany.svg"
-__trans_pride_file = "Transgender_Pride_flag.png"
+__belgium_file = "Flag_of_Belgium.png"
+__france_file = "Flag_of_France.png"
+__germany_file = "CoreFlags/Flag_of_Germany.png"
+__trans_pride_file = "CoreFlags/Transgender_Pride_flag.png"
 
 def __get_img(filename: str):
-    return cv2.imread(filename)
+    return cv2.imread(filename, 1)
 
 
 german_flag = __get_img(__germany_file)
