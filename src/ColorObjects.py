@@ -1,9 +1,11 @@
 from colorsys import rgb_to_hsv, hsv_to_rgb
 from typing import Union
 
+import numpy as np
+
 
 class RGB:
-    def __init__(self, values: tuple):
+    def __init__(self, values: Union[tuple, np.ndarray]):
         if len(values) != 3:
             raise Exception(f"Error: RGB value {values} does not have 3 values")
         _arr = []
@@ -16,14 +18,25 @@ class RGB:
                 if v < 0 or v > 255:
                     raise Exception(f"Error: RGB value {values} contains values out of range")
                 _arr.append(v)
-
-        self.r = int(_arr[0])
-        self.g = int(_arr[1])
-        self.b = int(_arr[2])
+        if isinstance(values, np.ndarray):
+            # CV2 returns as BGR, not RGB, for some reason
+            self.b = int(_arr[0])
+            self.g = int(_arr[1])
+            self.r = int(_arr[2])
+        else:
+            self.r = int(_arr[0])
+            self.g = int(_arr[1])
+            self.b = int(_arr[2])
 
     def to_hsv(self):
         hsv_raw = rgb_to_hsv(self.r/255, self.g/255, self.b/255)
         return HSV((hsv_raw[0] * 360, hsv_raw[1], hsv_raw[2]))
+
+    def __str__(self):
+        return f"r: {self.r}, g: {self.g}, b: {self.b}"
+
+    def __repr__(self):
+        return f"r: {self.r}, g: {self.g}, b: {self.b}"
 
 
 class HSV:
