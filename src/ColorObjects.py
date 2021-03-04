@@ -98,8 +98,6 @@ def categorise_color(value: Union[RGB, HSV]) -> Color:
     else:
         raise Exception("CategoriseColor Error: The given color is not in a valid format.")
 
-    print(f"h: {c.h}, s: {c.s}, v: {c.v}")
-
     if c.v < 0.1 or (c.s < 0.2 and c.v < 0.15):
         return black
     elif c.s < 0.04 and c.v < 0.95 or (180 < c.h < 230 and c.s < 0.2 and c.v < 0.7):

@@ -1,6 +1,4 @@
-import pytest
-
-from CoreObjects import *
+from src.ColorObjects import *
 
 
 class TestCategoriseColor:
