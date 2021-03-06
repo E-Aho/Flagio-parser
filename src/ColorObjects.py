@@ -101,9 +101,8 @@ gold = SubColor("gold", RGB((197, 179, 88)), yellow)
 
 def categorise_color(value: Union[RGB, HSV]) -> Color:
     # Hard coded because for our use case, we have quite specific colors to pick out, and only care about broad cases
-    # There is definitely a better way to do this but *shrug*
+    # There is definitely a better way to do this but for not it is ok
 
-    c = None
     if isinstance(value, RGB):
         c = value.to_hsv()
     elif isinstance(value, HSV):
