@@ -64,6 +64,3 @@ class TestGetBoundaries:
         lines = get_boundaries(panama_flag)
         print(lines)
         assert len(lines) == 2
-
-def
-
